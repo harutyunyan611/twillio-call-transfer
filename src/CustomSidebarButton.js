@@ -1,7 +1,5 @@
 import React from 'react';
 import { SideLink, Actions } from "@twilio/flex-ui";
-import {TransferIcon, TransferIconActive} from "./TransferIcons";
-
 const CustomSidebarButton = ({ activeView }) => {
     function navigate() {
         Actions.invokeAction('NavigateToView', { viewName: 'custom-view' });
@@ -9,9 +7,9 @@ const CustomSidebarButton = ({ activeView }) => {
 
     return (
       <SideLink
-          icon={<TransferIcon/>}
+          icon='SendLarge'
           showLabel={true}
-          iconActive={<TransferIconActive/>}
+          iconActive='SendLarge'
           isActive={activeView === 'custom-view'}
           onClick={navigate}
       >

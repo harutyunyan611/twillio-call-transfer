@@ -8,8 +8,9 @@ export default class CustomView extends React.Component{
     }
     render() {
         return(
-            <div>I am custom view
-                <button onClick={this.transferCall}>transferCall</button>
+            <div>
+                <p>Click the button bellow to transfer the call.</p>
+                <button onClick={this.transferCall}>Transfer</button>
             </div>
         )
     }
