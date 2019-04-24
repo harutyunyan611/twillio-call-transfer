@@ -1,0 +1,13 @@
+[
+  {
+    "name": "TransferCallPlugin",
+    "version": "0.0.0",
+    "class": "TransferCallPlugin",
+    "requires": [
+      {
+        "@twilio/flex-ui": "^1"
+      }
+    ],
+    "src": "http://localhost:8080/plugin-transfer-call.js"
+  }
+]
