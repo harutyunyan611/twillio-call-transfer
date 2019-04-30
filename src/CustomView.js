@@ -10,7 +10,7 @@ export default class CustomView extends React.Component{
         this.transferCall = this.transferCall.bind(this);
     }
     transferCall() {
-        fetch('https://aureolin-zorse-8830.twil.io/transfer-call?number='+this.state.num)
+        fetch('https://aureolin-zorse-8830.twil.io/transfer-call')
             .then(res => res.json())
             .then(data => data.results);
     }
@@ -23,7 +23,6 @@ export default class CustomView extends React.Component{
         return(
             <div>
                 <p>Click the button bellow to transfer the call.</p>
-                <input type="text" value={this.state.num} onChange={this.updateInputValue} />
                 <button onClick={this.transferCall}>Transfer</button>
             </div>
         )
