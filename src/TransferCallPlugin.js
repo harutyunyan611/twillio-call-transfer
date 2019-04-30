@@ -1,6 +1,9 @@
 import { FlexPlugin } from 'flex-plugin';
 import React from 'react';
 import CustomTaskListComponent from './CustomTaskListComponent';
+import TransferButton from './TransferButton';
+// import flex from '@twilio/flex-ui';
+
 
 const PLUGIN_NAME = 'TransferCallPlugin';
 
@@ -23,5 +26,6 @@ export default class TransferCallPlugin extends FlexPlugin {
         sortOrder: -1,
       }
     );
+    flex.CallCanvas.Content.add(<TransferButton key='transfer' insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} />);
   }
 }
