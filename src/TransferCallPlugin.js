@@ -2,7 +2,7 @@ import { FlexPlugin } from 'flex-plugin';
 import React from 'react';
 import CustomTaskListComponent from './CustomTaskListComponent';
 import TransferButton from './TransferButton';
-// import flex from '@twilio/flex-ui';
+import flex from '@twilio/flex-ui';
 
 
 const PLUGIN_NAME = 'TransferCallPlugin';
@@ -10,6 +10,10 @@ const PLUGIN_NAME = 'TransferCallPlugin';
 export default class TransferCallPlugin extends FlexPlugin {
   constructor() {
     super(PLUGIN_NAME);
+    this.state = {
+      callSid: ''
+    };
+    this.init = this.init.bind(this);
   }
 
   /**
@@ -20,12 +24,22 @@ export default class TransferCallPlugin extends FlexPlugin {
    * @param manager { import('@twilio/flex-ui').Manager }
    */
   init(flex, manager) {
-    flex.AgentDesktopView.Panel1.Content.add(
+      let transferIndex = 0;
+      manager.workerClient.on("reservationCreated", reservation => {
+          console.log("changingCallSId");
+          this.state.callSid = reservation.task.attributes.call_sid;
+
+          flex.CallCanvas.Content.remove('transfer' + transferIndex);
+          transferIndex++;
+          flex.CallCanvas.Content.add(<TransferButton key={'transfer'+transferIndex} insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} call-sid={this.state.callSid} />);
+      });
+
+      flex.AgentDesktopView.Panel1.Content.add(
       <CustomTaskListComponent key="demo-component" />,
       {
         sortOrder: -1,
       }
     );
-    flex.CallCanvas.Content.add(<TransferButton key='transfer' insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} />);
+    flex.CallCanvas.Content.add(<TransferButton key={'transfer'+transferIndex} insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} call-sid={this.state.callSid} />);
   }
 }
