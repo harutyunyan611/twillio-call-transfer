@@ -5,32 +5,36 @@ export default class CustomView extends React.Component{
         super(props);
         this.state = {
             num: '',
-            transferDisabled: true
+            transferDisabled: true,
+            callSid: ""
         };
+        console.log(1111111);
+        console.log(this.props["call-sid"]);
         this.updateInputValue = this.updateInputValue.bind(this);
         this.transferCall = this.transferCall.bind(this);
-    }
-
-    componentDidMount() {
-        this.callRequest = setInterval(()=>{
-            fetch('https://aureolin-zorse-8830.twil.io/check-call-availability?number='+this.state.num)
-                .then(res => res.json())
-                .then((res)=>{
-                    if(res.length && res instanceof Array) {
-                        this.setState({...this.state, transferDisabled: false})
-                    } else {
-                        this.setState({...this.state, transferDisabled: true})
-                    }
-                });
-        }, 3000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.callRequest);
+        var manager = this.props.fmanager;
+        let callSid = "";
+        console.log(manager);
+        manager.workerClient.on("reservationCreated", reservation => {
+            callSid = reservation.task.sid;
+            this.setState({
+                ...this.state,
+                transferDisabled: !callSid,
+                callSid
+            })
+            manager.workerClient.on("wrapup", reservation1 => {
+                callSid = "";
+                this.setState({
+                    ...this.state,
+                    transferDisabled: !callSid,
+                    callSid
+                })
+            });
+        });
     }
 
     transferCall() {
-        fetch('https://aureolin-zorse-830.twil.io/transfer-call-dynamic?number='+this.state.num+'&agent='+this.props["current-sid"])
+        fetch('https://aureolin-zorse-830.twil.io/transfer-call-dynamic?number='+this.state.num+'&csid='+this.state.callSid)
             .then(res => res.json())
             .then(data => data.results);
     }

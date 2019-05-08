@@ -1,6 +1,6 @@
 import React from 'react';
 import { SideLink, Actions } from "@twilio/flex-ui";
-const CustomSidebarButton = ({ activeView, asd }) => {
+const CustomSidebarButton = ({ activeView }) => {
     function navigate() {
         Actions.invokeAction('NavigateToView', { viewName: 'custom-view' });
     }
