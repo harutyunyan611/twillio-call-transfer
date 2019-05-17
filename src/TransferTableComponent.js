@@ -18,7 +18,6 @@ export default class TransferButton extends React.Component{
             num: '',
             buttonState: false
         };
-
     }
     createCall() {
         return undefined;
@@ -43,7 +42,7 @@ export default class TransferButton extends React.Component{
                             <td className={cellStyle}>Hassan</td>
                             <td className={cellStyle}>+3243249324</td>
                             <td className={cellStyle}><button onClick={this.createCall}>Call</button></td>
-                            <td className={cellStyle}><button onClick={this.transferCall}>Transfer</button></td>
+                            <td className={cellStyle}><button onClick={this.props.transferCall}>Transfer</button></td>
                         </tr>
                     </tbody>
                 </table>

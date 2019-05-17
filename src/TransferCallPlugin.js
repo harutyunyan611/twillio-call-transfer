@@ -28,13 +28,13 @@ export default class TransferCallPlugin extends FlexPlugin {
       const TransferButton = transferWithTable(TransferTableComponent);
       let transferIndex = 0;
       manager.workerClient.on("reservationCreated", reservation => {
-          console.log("changingCallSId");
-          reservation.on("re")
-          this.state.callSid = reservation.task.attributes.call_sid;
-
-          flex.CallCanvas.Content.remove('transfer' + transferIndex);
-          transferIndex++;
-          flex.CallCanvas.Content.add(<TransferButton key={'transfer'+transferIndex} insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} callSid={this.state.callSid}/>);
+          reservation.on("accepted", currentReservation => {
+              this.state.callSid = currentReservation.task.attributes.call_sid;
+              console.log(9997, currentReservation.task.attributes.call_sid);
+              flex.CallCanvas.Content.remove('transfer' + transferIndex);
+              transferIndex++;
+              flex.CallCanvas.Content.add(<TransferButton key={'transfer'+transferIndex} insightsClient={manager.insightsClient} url={manager.serviceConfiguration.runtime_domain} callSid={currentReservation.task.attributes.call_sid}/>);
+          });
       });
 
       flex.AgentDesktopView.Panel1.Content.add(

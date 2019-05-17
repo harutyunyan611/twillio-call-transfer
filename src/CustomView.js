@@ -48,7 +48,7 @@ export default class CustomView extends React.Component{
         manager.workerClient.on("reservationCreated", reservation => {
             reservation.on("accepted", reservation1 => {
                 console.log(8888, reservation1);
-                console.log(8888, reservation1.task.sid);
+                console.log(9997, reservation1.task.sid);
                 console.log({
                     ...this.state,
                     transferDisabled: !reservation1.task.sid,
