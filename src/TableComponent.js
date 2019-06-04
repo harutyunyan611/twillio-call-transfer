@@ -1,5 +1,7 @@
 import React from 'react';
 import { css } from 'react-emotion';
+import PropTypes from 'prop-types';
+
 
 const transferButtonStyles = css`
     width: 100%;
@@ -11,17 +13,27 @@ const cellStyle = css`
     border: 1px solid black;
 `
 
-export default class TransferButton extends React.Component{
+export default class TableComponent extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             num: '',
             buttonState: false
         };
+
+        this.tableData = [
+            {
+                name: "Hassan",
+                number: "+3243249324"
+            }
+        ]
     }
-    createCall() {
-        return undefined;
-    }
+
+    static propTypes = {
+        transferCall: PropTypes.func,
+        dialCall: PropTypes.func
+    };
+
     render() {
         return(
             <div className={transferButtonStyles} style={{
@@ -41,7 +53,7 @@ export default class TransferButton extends React.Component{
                         <tr className={cellStyle}>
                             <td className={cellStyle}>Hassan</td>
                             <td className={cellStyle}>+3243249324</td>
-                            <td className={cellStyle}><button onClick={this.createCall}>Call</button></td>
+                            <td className={cellStyle}><button onClick={() => this.props.dialCall("+16477008200")}>Call</button></td>
                             <td className={cellStyle}><button onClick={this.props.transferCall}>Transfer</button></td>
                         </tr>
                     </tbody>
